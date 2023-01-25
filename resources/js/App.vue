@@ -1,12 +1,12 @@
 <template>
-    <div>
-        <v-app>
+    <v-app>
         <header-main/>
-        <v-main>
-            <router-view></router-view>
+        <v-main app>
+            <v-container>
+                <router-view></router-view>
+            </v-container>
         </v-main>
     </v-app>
-    </div>
 </template>
 
 <script>

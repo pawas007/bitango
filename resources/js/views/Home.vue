@@ -1,6 +1,5 @@
 <template>
-    <v-container>
-        <v-layout column align-center class="mt-10">
+    <v-layout column align-center class="mt-10">
             <h1 class="display-1">Vue Laravel Application</h1>
             <p>
                 Click user icon to SignUp or check users list
@@ -15,9 +14,10 @@
                 <li>
                     Run queue
                 </li>
+                <li>SMS service - https://www.twilio.com</li>
+                <li>STMP - https://mailtrap.io</li>
             </ul>
         </v-layout>
-    </v-container>
 </template>
 <script>
 export default {

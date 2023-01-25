@@ -13,6 +13,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::get('test',function (){
+    $sms = new \App\Services\SmsSender();
+    $sms->newSms();
+});
+
 Route::get('/{any}', function () {
     return view('spa');
 })->where('any', '^.*$')

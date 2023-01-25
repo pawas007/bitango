@@ -2,12 +2,13 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Services\SmsSender;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Twilio\TwiML\Voice\Sms;
 
 class User extends Authenticatable
 {
@@ -48,7 +49,7 @@ class User extends Authenticatable
      */
     public function phone(): HasOne
     {
-       return $this->hasOne(PhoneBook::class);
+        return $this->hasOne(PhoneBook::class);
     }
 
     /**
@@ -56,7 +57,14 @@ class User extends Authenticatable
      */
     public function country(): HasOne
     {
-     return   $this->hasOne(UserCountry::class);
+        return $this->hasOne(UserCountry::class);
     }
 
+    /**
+     * @return void
+     */
+    public function sendWelcomeSms(): void
+    {
+        SmsSender::newSms($this->phone->number, env('WELCOME_SMS_TXT'));
+    }
 }

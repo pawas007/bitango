@@ -1,7 +1,6 @@
 <template>
-    <v-container>
-        <v-layout column align-center class="mt-10">
-            <h1 class="display-1">Users List</h1>
+    <v-layout column align-center class="mt-10">
+            <h1 class="display-1 mb-10">Users List</h1>
             <v-data-table
                 :search="search"
                 :loading="loading"
@@ -24,7 +23,6 @@
                 </template>
             </v-data-table>
         </v-layout>
-    </v-container>
 </template>
 
 <script>

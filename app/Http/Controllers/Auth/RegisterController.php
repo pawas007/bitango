@@ -3,8 +3,11 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\PhoneBook;
 use App\Models\User;
+use App\Models\UserCountry;
 use App\Notifications\EmailVerification;
+use App\Notifications\WelcomeNotification;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -62,7 +65,14 @@ class RegisterController extends Controller
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
         ]);
-//        $user->notify(new EmailVerification($user));
+        $phone = new PhoneBook();
+        $phone->number = $data['number'];
+        $country = new UserCountry();
+        $country->name = $data['country'];
+        $user->phone()->save($phone);
+        $user->country()->save($country);
+        $user->notify(new WelcomeNotification());
+        $user->sendWelcomeSms();
         return $user;
     }
 }

@@ -1,7 +1,7 @@
 import {extend, setInteractionMode} from 'vee-validate'
 import {required, email, confirmed} from 'vee-validate/dist/rules'
-setInteractionMode('eager')
 
+setInteractionMode('eager')
 extend('email', {
     ...email,
     message: 'Email must be valid',
@@ -23,4 +23,6 @@ extend('required', {
 extend("confirmed", {
     ...confirmed,
     message: "The password does not match",
-});
+})
+
+
