@@ -57,6 +57,30 @@
                                 </template>
                             </v-autocomplete>
                         </validation-provider>
+                        <div class="d-flex">
+                            <v-text-field
+                                class="col-1"
+                                outlined
+                                disabled
+                                v-model="countryPhoneCode"
+                                label="Code"
+                            ></v-text-field>
+                            <validation-provider
+                                style="width: 100%"
+                                v-slot="{ errors }"
+                                name="Phone"
+                                rules="required">
+                                <v-text-field
+                                    class="ml-1"
+                                    outlined
+                                    v-model="user.number"
+                                    :error-messages="errors"
+                                    label="Phone"
+                                    v-mask="'## ###-##-##'"
+                                    :value="user.number"
+                                ></v-text-field>
+                            </validation-provider>
+                        </div>
                         <validation-provider
                             class="mt-2 d-block"
                             v-slot="{ errors }"
@@ -118,6 +142,7 @@ export default {
     components: {
         ValidationProvider,
         ValidationObserver,
+
     },
 
     data: () => ({
@@ -128,12 +153,12 @@ export default {
         currentCountry: null,
         countryPhoneCode: null,
         user: {
-            name: 'Ostap',
-            email: 'trushostap@gmail.com',
-            number: '+380989584976',
-            country: 'Ukraine',
-            password: 'ostap666',
-            password_confirmation: 'ostap666'
+            name: '',
+            email: '',
+            number: '',
+            country: '',
+            password: '',
+            password_confirmation: ''
         },
 
     }),
@@ -141,12 +166,18 @@ export default {
         signup() {
             this.$refs.signupForm.validate().then((r) => {
                 if (r) {
-                    axios.post('register', this.user).then((res) => {
+                    let userTransform = this.user
+                    let phoneNumber = this.countryPhoneCode+this.user.number.replace(/ /g,'').replace(/-/g,'');
+                    userTransform.number = phoneNumber;
+                    axios.post('register',  userTransform).then((res) => {
                         this.successAlert = true
                         this.clear()
                         setTimeout(() => {
                             this.successAlert = false
                         }, 2000)
+                    }).catch((e) => {
+                        alert('Validation errror')
+                        // TODO : CATCH VALIDATION FROM SERVER
                     })
                 }
 

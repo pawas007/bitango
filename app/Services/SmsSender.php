@@ -10,7 +10,7 @@ class SmsSender
     {
 //    TODO : Make this action in JOB (queue REDIS)
         try {
-            $client = new Client(env('TWILIO_SID'), env('TWILIO_TOCKEN'));
+            $client = new Client(env('TWILIO_SID'), env('TWILIO_TOKEN'));
             $client->messages->create(
                 $number,
                 array(
